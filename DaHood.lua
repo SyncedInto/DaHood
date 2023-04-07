@@ -1,6 +1,10 @@
 if not game:IsLoaded() then game.Loaded:Wait() end
 if game.PlaceId ~= 2788229376 then return end
 
+local fixed = false
+
+if not fixed then return end
+
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
