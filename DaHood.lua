@@ -1,10 +1,6 @@
 if not game:IsLoaded() then game.Loaded:Wait() end
 if game.PlaceId ~= 2788229376 then return end
 
-local fixed = false
-
-if not fixed then return end
-
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -27,7 +23,7 @@ local Close = Instance.new("TextButton")
 local ChangeMode = Instance.new("TextButton")
 local UICorner_2 = Instance.new("UICorner")
 
-ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.Parent = Player.PlayerGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.IgnoreGuiInset = true
 
@@ -101,7 +97,7 @@ local function listenMessage(v, Message)
 	if Message == "/e !hlp" and Mode ~= "Off" then
 		local Character = Player.Character
 		local vCharacter = v.Character
-		
+
 		if Character and vCharacter and Character:FindFirstChild("HumanoidRootPart") and vCharacter:FindFirstChild("HumanoidRootPart") then
 			if Mode == "On" then
 				Character.HumanoidRootPart.CFrame = vCharacter.HumanoidRootPart.CFrame
@@ -111,7 +107,7 @@ local function listenMessage(v, Message)
 						Character.HumanoidRootPart.CFrame = vCharacter.HumanoidRootPart.CFrame
 					end
 				end
-				
+
 				game:GetService("StarterGui"):SetCore("SendNotification",{
 					Title = "Needs help!",
 					Text = "Do you wanna TP to " .. Player.Name,
@@ -144,21 +140,39 @@ end)
 
 -- Input
 
+local function chat(text)
+	local StarterGui = game:GetService('StarterGui')
+	local A = false
+	local ChatBar = game:GetService('Players').LocalPlayer:WaitForChild('PlayerGui'):WaitForChild('Chat'):WaitForChild('Frame'):WaitForChild('ChatBarParentFrame'):WaitForChild('Frame'):WaitForChild('BoxFrame'):WaitForChild('Frame'):FindFirstChildOfClass('TextBox')
+	A = StarterGui:GetCore('ChatActive')
+	StarterGui:SetCore('ChatActive', true)
+	ChatBar:CaptureFocus()
+	
+	local oldtext = ChatBar.Text
+	
+	ChatBar.Text = text
+	ChatBar.TextEditable = false
+	task.wait()
+	ChatBar:ReleaseFocus(true)
+	ChatBar.TextEditable = true
+	task.wait()
+	StarterGui:SetCore('ChatActive', A)
+	ChatBar.Text = oldtext
+end
+
 local Can = true
 UserInputService.InputBegan:Connect(function(Input, Paused)
 	if Input.KeyCode == Enum.KeyCode.G and not Paused then
 		pcall(function()
-			local Remote = ReplicatedStorage:WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest")
-			
-			if Remote and Can then
+			if Can then
 				Can = false
-				Remote:FireServer("/e !hlp", "All")
+				chat("/e !hlp")
 				wait(5)
 				Can = true
 			end
 		end)
 	end
-	
+
 	if Input.KeyCode == Enum.KeyCode.RightShift and not Paused then
 		ScreenGui.Enabled = not ScreenGui.Enabled
 	end
