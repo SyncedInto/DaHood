@@ -152,10 +152,10 @@ local function chat(text)
 	
 	ChatBar.Text = text
 	ChatBar.TextEditable = false
-	task.wait()
+	wait()
 	ChatBar:ReleaseFocus(true)
 	ChatBar.TextEditable = true
-	task.wait()
+	wait()
 	StarterGui:SetCore('ChatActive', A)
 	ChatBar.Text = oldtext
 end
