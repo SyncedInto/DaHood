@@ -162,7 +162,7 @@ end
 
 local Can = true
 UserInputService.InputBegan:Connect(function(Input, Paused)
-	if Input.KeyCode == Enum.KeyCode.G and not Paused then
+	if Input.KeyCode == Enum.KeyCode.V and not Paused then
 		pcall(function()
 			if Can then
 				Can = false
