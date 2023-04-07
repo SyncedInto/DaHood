@@ -94,7 +94,7 @@ ChangeMode.MouseButton1Click:Connect(function()
 end)
 
 local function listenMessage(v, Message)
-	if Message == "/e !hlp" and Mode ~= "Off" then
+	if Message == "/e !help" and Mode ~= "Off" then
 		local Character = Player.Character
 		local vCharacter = v.Character
 
@@ -166,7 +166,7 @@ UserInputService.InputBegan:Connect(function(Input, Paused)
 		pcall(function()
 			if Can then
 				Can = false
-				chat("/e !hlp")
+				chat("/e !help")
 				wait(5)
 				Can = true
 			end
